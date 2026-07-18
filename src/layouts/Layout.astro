@@ -41,6 +41,7 @@ const fullTitle = title === 'Pune Tech Community' ? title : `${title} | Pune Tec
       rel="stylesheet"
     />
     <slot name="head" />
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
   </head>
   <body>
     <Nav />
@@ -48,5 +49,16 @@ const fullTitle = title === 'Pune Tech Community' ? title : `${title} | Pune Tec
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', (user) => {
+          if (!user) {
+            window.netlifyIdentity.on('login', () => {
+              document.location.href = '/admin/';
+            });
+          }
+        });
+      }
+    </script>
   </body>
 </html>
