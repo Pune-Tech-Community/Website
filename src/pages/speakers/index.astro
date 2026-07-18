@@ -1,0 +1,55 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const speakers = (await getCollection('speakers')).sort((a, b) => a.data.name.localeCompare(b.data.name));
+---
+
+<Layout title="Speakers" description="Practitioners from Pune's Microsoft ecosystem sharing what they've learned.">
+  <div class="container">
+    <h1 class="page-title">Speakers</h1>
+    <p class="page-subtitle">Practitioners from Pune's Microsoft ecosystem sharing what they've learned.</p>
+    <div class="grid-3">
+      {
+        speakers.map((sp) =>
+          sp.data.linkedin ? (
+            <a href={sp.data.linkedin} target="_blank" rel="noopener" class="card speaker-card">
+              <div class="avatar-placeholder speaker-avatar" />
+              <div class="speaker-name">{sp.data.name}</div>
+              {sp.data.title && <div class="speaker-title">{sp.data.title}</div>}
+            </a>
+          ) : (
+            <a href={`/speakers/${sp.id}`} class="card speaker-card">
+              <div class="avatar-placeholder speaker-avatar" />
+              <div class="speaker-name">{sp.data.name}</div>
+              {sp.data.title && <div class="speaker-title">{sp.data.title}</div>}
+            </a>
+          )
+        )
+      }
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .speaker-card {
+    padding: 28px;
+    text-align: center;
+    color: inherit;
+  }
+  .speaker-avatar {
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 16px;
+  }
+  .speaker-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--color-ink);
+    margin-bottom: 4px;
+  }
+  .speaker-title {
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+</style>

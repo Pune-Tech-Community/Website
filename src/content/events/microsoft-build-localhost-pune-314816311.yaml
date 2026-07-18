@@ -1,0 +1,124 @@
+title: Microsoft Build //localhost:Pune
+date: '2026-06-13'
+time: 10:00 AM IST
+tag: Community
+format: In-person
+location: AIT Global, Office no 1105, Nyati Enthral, Kharadi, Pune, IN
+description: |-
+  Microsoft Build //localhost is a series of local, community-driven "after-party" events that follow the main Microsoft Build conference.
+  -----
+
+  📍Location:
+
+  AIT Global, Office no 1105, 11th Floor, Nyati Enthral, Kharadi, Pune
+
+  Landmark: Opp. Reliance Smart, Kharadi
+
+  🗺️ Locate on Google Map
+
+  Space is limited to "120 seats" for this event.
+  Cancel your registration if you do not plan on attending.
+  Please be ready to present your registration confirmation email at the door, if requested.
+
+  -----
+  Agenda:
+  ⏰ 10:00 AM to 10:30 AM IST
+
+  Registration, Welcome, and Introduction
+
+  by Nanddeep Nachan and Siddharth Vaghasia (Organizers)
+
+  ---------------------------------------------
+  ⏰ 10:30 AM to 11:30 AM IST
+
+  Build context‑aware agents at scale with Microsoft IQ
+
+  Level: (300) Advanced
+  High performance agents are built on intelligence that brings together context, enterprise data, orchestration, and governance. Learn how Foundry IQ, Fabric IQ, and Work IQ provide the enterprise intelligence layer for AI agents. Design agents that can search across organizational knowledge, reason over business data, and operate with awareness of people and work signals. Take action within trusted boundaries, providing a practical foundation for building scalable and reliable agents
+  by Siddharth Vaghasia (Microsoft MVP)
+
+  ---------------------------------------------
+  ⏰ 11:30 AM to 01:00 PM IST
+
+  Hands on Lab:
+
+  Working with Models: Get Started with Models in Microsoft Foundry to Build AI Apps
+
+  Level: (300) Advanced
+  In this hands-on lab, you will build a production-ready AI application using Microsoft Foundry, with no fine-tuning or deep machine learning expertise required. You will discover and select models, provision a Foundry project, and connect to a hosted model using the OpenAI SDK. You’ll implement a comment moderation workflow, compare model outputs, and package the solution as a hosted agent using Python, ready for real-world integration.
+  by Nanddeep Nachan (Microsoft MVP, MCT) and Smita Nachan (Microsoft MVP)
+
+  ---------------------------------------------
+  ⏰ 01:00 PM to 02:00 PM IST
+
+  🍴🍕 Lunch ( Your lunch is on us! )🥤🍴
+
+  ---------------------------------------------
+  ⏰ 02:00 PM to 03:00 PM IST
+
+  Developer Tools & Frameworks: Your agent, anywhere: MultiClient, MultiDevice with GitHub Copilot SDK
+  Level: (300) Advanced
+
+  Agents are powerful on your machine, but what happens when you need them everywhere else? In this session, we'll show how GitHub Copilot SDK lets you build an agent, embed it in an app, and take it with you across devices and into the cloud. You'll see how to go from a local agent to one you can access on your phone, move between machines, and run across multiple clients. If you've been working with agents locally and wondering what the next step looks like, this is it.
+  by Kunj Sangani (M365 Consultant)
+
+  ---------------------------------------------
+  ⏰ 03:00 PM to 04:00 PM IST
+
+  Responsible AI: Observability for AI agents on any framework
+
+  Level: (300) Advanced
+  Nondeterministic, multi-agent systems break traditional monitoring. As agents move into production, developers need observability built into the workflow, not bolted on after failures. This session explores what modern observability looks like for AI agents: how tracing and evaluation must work across any framework, why the inner loop deserves the same rigor as the outer, how context-specific evals evolve with your agent, and how always-on signals tie behavior to business outcomes.
+  by Dr. Mahender Nakrani (AI Solution Architect, AIT Global)
+
+  ---------------------------------------------
+  This in-person event is built for developers and cloud engineers who want to design, build, and deploy real-world AI solutions on Azure. Expect a hands-on, implementation-focused experience using Microsoft Foundry and GitHub Copilot with live demos, guided labs, and practical developer workflows.
+  What to expect:
+
+  Key takeaways and announcements from Microsoft Build 2026
+  Deep dive into Azure AI and Generative AI use cases
+  Live demos with Microsoft Foundry and GitHub Copilot
+  Hands-on labs to build and test AI-powered features end-to-end
+  Best practices for building AI-powered applications
+  Networking with the local AI developer community
+
+  Whether you're shipping your first AI feature or scaling production systems, this event is designed to give you actionable insights to accelerate your AI journey with Microsoft.
+
+  ---------------------------------------------
+  👮 Attendees Guidelines
+
+  Please carefully review the following guidelines to ensure a smooth and secure event experience for everyone.
+  📝 Registration & Entry
+
+  To keep things running smoothly, please ensure you arrive by 10:30 AM IST, as entry will not be permitted after that time.
+  Attendance is subject to a confirmation email from the Pune Tech Community.
+  Please note that the registration email sent by Meetup does not serve as an entry pass for the event.
+  Please do carry your laptop and charger to carry out your hands-on lab.
+  Entry will be permitted only after verification of a valid Government-issued photo ID proof.
+
+  🛡️ Security & Venue Policies
+
+  Visitors are required to obtain a Visitor Badge at the respective building reception and must remain escorted throughout their stay on the premises.
+  Temporary visitor passes must be returned to the receptionist before leaving the premises.
+  Visitors must strictly adhere to the “No Photography” and “No Smoking” policies within the campus.
+  Any misconduct, policy violation, or non-compliance with venue regulations may result in denial of entry or removal from the event premises.
+
+  🚗 Parking & Transportation
+
+  Visitors are requested to park their vehicles only in the designated parking areas provided.
+  Entry on two-wheelers without a helmet will not be permitted.
+
+  🤝 Code of Conduct
+
+  Attendees are expected to maintain professional and respectful behavior toward organizers, security personnel, venue staff, and fellow participants.
+  Please cooperate with all security and operational procedures to help us conduct the event smoothly and efficiently.
+  We encourage all attendees to contribute toward creating a safe, inclusive, and positive environment for everyone.
+
+  ---------------------------------------------
+
+  See you there!
+  👉 More details, surprises, and announcements in the coming days.
+
+  The experience will be truly amazing! 💃🕺
+meetupUrl: https://www.meetup.com/pune-tech-community/events/314816311/
+image: /uploads/events/314816311.jpg

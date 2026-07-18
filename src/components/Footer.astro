@@ -1,0 +1,136 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="cols">
+    <div>
+      <img src="/logo.jpg" alt="Pune Tech Community" height="32" style="width:auto; margin-bottom:16px;" />
+      <p class="tagline">Pune's community for Azure, AI, Power Platform &amp; Microsoft 365 practitioners.</p>
+      <div class="social">
+        <a href="https://www.meetup.com/Pune-Tech-Community/" target="_blank" rel="noopener">Meetup</a>
+        <a href="https://www.youtube.com/c/PuneTechCommunity" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.linkedin.com/company/PuneTechCommunity" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.facebook.com/groups/PuneTechCommunity" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://chat.whatsapp.com/CZeGL0IX3OH0zX30VJJNQg" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <a href="https://linktr.ee/qr/c5f30be7-352b-4972-ad5d-ec8498e86a68" target="_blank" rel="noopener" class="qr-block">
+        <img src="/social-qr.jpg" alt="QR code linking to all Pune Tech Community socials" width="72" height="72" />
+        <span>Scan for all our socials</span>
+      </a>
+    </div>
+    <div>
+      <div class="col-title">EXPLORE</div>
+      <div class="col-links">
+        <a href="/events">Events</a>
+        <a href="/speakers">Speakers</a>
+        <a href="https://www.youtube.com/c/PuneTechCommunity" target="_blank" rel="noopener">Videos</a>
+      </div>
+    </div>
+    <div>
+      <div class="col-title">COMMUNITY</div>
+      <div class="col-links">
+        <a href="/about">About</a>
+        <a href="/sponsors">Sponsors</a>
+      </div>
+    </div>
+    <div>
+      <div class="col-title">GET THE APP</div>
+      <div class="col-links">
+        <span class="app-badge">App Store — coming soon</span>
+        <span class="app-badge">Google Play — coming soon</span>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">© {year} Pune Tech Community. All talks free, forever.</div>
+</footer>
+
+<style>
+  footer {
+    background: var(--color-ink);
+    padding: 64px 56px 32px;
+  }
+  .cols {
+    max-width: 1280px;
+    margin: 0 auto 48px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+    gap: 40px;
+  }
+  .tagline {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0 0 16px;
+    max-width: 260px;
+  }
+  .social {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .social a {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .qr-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .qr-block img {
+    border-radius: 8px;
+    background: white;
+    padding: 4px;
+  }
+  .qr-block span {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 12px;
+    font-weight: 600;
+    max-width: 100px;
+  }
+  .col-title {
+    color: white;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+  .col-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .col-links a {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 14px;
+  }
+  .app-badge {
+    display: inline-block;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 9px 14px;
+    width: fit-content;
+  }
+  .bottom {
+    max-width: 1280px;
+    margin: 0 auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 24px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  @media (max-width: 900px) {
+    footer {
+      padding: 48px 20px 24px;
+    }
+    .cols {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

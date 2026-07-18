@@ -1,0 +1,40 @@
+title: Kick Start Your Azure OpenAI Journey Step by Step (Part 3 of 3)
+date: '2023-12-02'
+time: 11:00 AM IST
+tag: Azure
+format: Virtual
+location: Online
+description: |-
+  Welcome to the 3 part series to kick start your Azure OpenAI journey!
+  ---------------------------------------------
+
+  How to join?
+
+  Join with MS Teams meeting
+
+  ---------------------------------------------
+  This session will build on the knowledge you gained in Part 2 of this series and will teach you how to:
+
+  Perform fine-tuning on Azure OpenAI models
+  Secure your Azure OpenAI service
+  Use Azure AI Content Safety to protect your users
+  See demos of Azure OpenAI in action
+  This session is intended for anyone who is interested in learning more about how to use Azure OpenAI to power their own AI solutions.
+
+  Agenda:
+
+  Fine tuning: In this section, we will discuss how to fine tune Azure OpenAI models to improve their performance on specific tasks.
+  Security: We will then talk about how to secure your Azure OpenAI service from unauthorized access and misuse.
+  Content Safety: We will also discuss how to use Azure AI Content Safety to protect your users from harmful content.
+  Demos: Finally, we will give you a live demonstration of Azure OpenAI in action.
+
+  Here are some additional safety considerations that will be covered in the session:
+
+  The importance of using Azure OpenAI responsibly and ethically
+  The need to be aware of the potential risks of using AI, such as bias and discrimination
+  The importance of using Azure OpenAI in a way that protects user privacy
+
+  We hope this session will help you to use Azure OpenAI safely and responsibly.
+  See you there!
+meetupUrl: https://www.meetup.com/pune-tech-community/events/296735458/
+image: /uploads/events/296735458.jpg

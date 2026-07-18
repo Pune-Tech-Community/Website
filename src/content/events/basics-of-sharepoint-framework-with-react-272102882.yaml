@@ -1,0 +1,22 @@
+title: Basics of SharePoint Framework with React
+date: '2020-07-25'
+time: 4:30 PM IST
+tag: M365
+format: Virtual
+location: Online
+description: |-
+  This session will cover basics of React from SPFx development perspective, creating a SPFx Web part, and adding a new web part to an existing solution.
+  Agenda:
+
+  Introduction to SPFx
+  React Components
+  State and Props in React
+  SPFx Web Part deployment
+  Fluent UI (earlier Office Fabric UI)
+
+  Target Audience:
+
+  No prior knowledge of React and SPFx is required.
+  Should have development knowledge in SharePoint
+meetupUrl: https://www.meetup.com/pune-tech-community/events/272102882/
+image: /uploads/events/272102882.jpg

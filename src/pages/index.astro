@@ -1,0 +1,430 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { tagClass, thumbClass, formatDate } from '../lib/tags';
+import { getSiteSettings } from '../lib/settings';
+
+const now = new Date();
+const settings = await getSiteSettings();
+
+const events = (await getCollection('events', ({ data }) => !data.draft))
+  .filter((e) => e.data.date >= now)
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
+  .slice(0, 3);
+
+const videos = (await getCollection('videos'))
+  .sort((a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0))
+  .slice(0, 3);
+
+const sponsors = await getCollection('sponsors');
+const highlights = (await getCollection('highlights')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout
+  title="Pune Tech Community"
+  description="Pune's home for Azure, AI and Microsoft 365 enthusiasts. Free monthly talks, hands-on workshops and a community of builders — in Pune and online."
+>
+  <section class="hero">
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="eyebrow">PUNE TECH COMMUNITY</span>
+        <h1>Pune's home for Azure, AI &amp; Microsoft 365 enthusiasts</h1>
+        <p class="subtext">
+          Free monthly talks, hands-on workshops and a community of builders working across Azure, AI,
+          Power Platform and M365. In-person in Pune, streamed everywhere.
+        </p>
+        <div class="hero-cta">
+          <a href="/events" class="btn btn-accent">See upcoming events</a>
+          <a href="https://www.meetup.com/Pune-Tech-Community/" class="btn btn-outline" target="_blank" rel="noopener"
+            >Join the community</a
+          >
+        </div>
+      </div>
+      <div class="hero-visual">
+        <svg width="100%" height="260" viewBox="0 0 360 260" style="max-width:360px;">
+          <line x1="60" y1="60" x2="180" y2="130" stroke="oklch(0.8 0.05 250)" stroke-width="2"></line>
+          <line x1="180" y1="130" x2="300" y2="70" stroke="oklch(0.8 0.05 250)" stroke-width="2"></line>
+          <line x1="180" y1="130" x2="140" y2="220" stroke="oklch(0.8 0.05 250)" stroke-width="2"></line>
+          <line x1="180" y1="130" x2="280" y2="200" stroke="oklch(0.8 0.05 250)" stroke-width="2"></line>
+          <line x1="60" y1="60" x2="140" y2="220" stroke="oklch(0.85 0.04 250)" stroke-width="1.5"></line>
+          <circle cx="180" cy="130" r="20" fill="oklch(0.52 0.16 250)"></circle>
+          <circle cx="60" cy="60" r="13" fill="oklch(0.68 0.19 45)"></circle>
+          <circle cx="300" cy="70" r="13" fill="oklch(0.55 0.16 300)"></circle>
+          <circle cx="140" cy="220" r="13" fill="oklch(0.6 0.14 165)"></circle>
+          <circle cx="280" cy="200" r="13" fill="oklch(0.68 0.19 45)"></circle>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats container">
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-num">{settings.memberCount}</div>
+        <div class="stat-label">Community members</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">{settings.eventsHosted}</div>
+        <div class="stat-label">Events hosted</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">{settings.speakersFeatured}</div>
+        <div class="stat-label">Speakers featured</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container block">
+    <div class="section-head">
+      <h2 class="section-title">Upcoming events</h2>
+      <a href="/events" class="view-all">View all &rarr;</a>
+    </div>
+    {events.length > 0 ? (
+      <div class="grid-3">
+        {
+          events.map((ev) => (
+            <a href={`/events/${ev.id}`} class="card event-card">
+              {ev.data.image ? (
+                <img src={ev.data.image} alt="" class="thumb-img" />
+              ) : (
+                <div class:list={['thumb', thumbClass(ev.data.tag)]}>event banner</div>
+              )}
+              <div class="card-body">
+                <div class="badges">
+                  <span class:list={['badge', tagClass(ev.data.tag)]}>{ev.data.tag}</span>
+                  <span class="badge badge-format">{ev.data.format}</span>
+                </div>
+                <div class="event-title">{ev.data.title}</div>
+                <div class="event-date">{formatDate(ev.data.date)}</div>
+                <span class="btn btn-primary btn-block">RSVP</span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    ) : (
+      <p class="empty-state">
+        No upcoming events right now — <a href="/events">browse our past talks</a> or check back soon.
+      </p>
+    )}
+  </section>
+
+  <section class="container block">
+    <div class="section-head">
+      <h2 class="section-title">Featured talks</h2>
+      <a href="/videos" rel="noopener" class="view-all">Watch more &rarr;</a>
+    </div>
+    <div class="grid-3">
+      {
+        videos.map((v) => (
+          <a href="https://www.youtube.com/c/PuneTechCommunity" target="_blank" rel="noopener" class="video-card">
+            <div class="video-thumb">
+              <img src={`https://img.youtube.com/vi/${v.data.youtubeId}/hqdefault.jpg`} alt="" loading="lazy" />
+              <div class="play-btn">
+                <div class="play-triangle" />
+              </div>
+              <span class="duration">{v.data.duration}</span>
+            </div>
+            <div class="video-title">{v.data.title}</div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="sponsor-strip">
+    <div class="sponsor-strip-label">BACKED BY THE PUNE TECH ECOSYSTEM</div>
+    <div class="sponsor-row">
+      {sponsors.map((s) => <div class="sponsor-pill">{s.data.name}</div>)}
+    </div>
+  </section>
+
+  {highlights.length > 0 && (
+    <section class="container block">
+      <h2 class="section-title" style="text-align:center; margin-bottom:40px;">Community highlights</h2>
+      <div class="grid-3">
+        {
+          highlights.map((h) => (
+            <div class="card highlight-card">
+              <p class="quote">&ldquo;{h.data.quote}&rdquo;</p>
+              <div class="highlight-person">
+                <div class="avatar-placeholder highlight-avatar" />
+                <div>
+                  <div class="highlight-name">{h.data.name}</div>
+                  <div class="highlight-role">{h.data.role}</div>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  )}
+</Layout>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 80px 56px;
+  }
+  .hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(10px);
+    pointer-events: none;
+  }
+  .hero-glow-1 {
+    top: -120px;
+    right: -100px;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, oklch(0.8 0.1 250 / 0.35), transparent 70%);
+  }
+  .hero-glow-2 {
+    bottom: -160px;
+    left: -120px;
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, oklch(0.78 0.12 45 / 0.25), transparent 70%);
+  }
+  .hero-content {
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 56px;
+  }
+  .hero-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .eyebrow {
+    display: inline-block;
+    background: var(--color-blue-tint);
+    color: var(--color-blue-dark);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--color-ink);
+    line-height: 1.1;
+    margin: 0 0 20px;
+  }
+  .subtext {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--color-muted-2);
+    margin: 0 0 32px;
+    max-width: 520px;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+  }
+  .hero-visual {
+    flex-shrink: 0;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    padding: 40px 0;
+  }
+  .stat-num {
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--color-blue-dark);
+  }
+  .stat-label {
+    font-size: 14px;
+    color: var(--color-muted);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .block {
+    padding-top: 0;
+    padding-bottom: 56px;
+  }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .view-all {
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .event-card {
+    display: block;
+    color: inherit;
+  }
+  .thumb {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+    color: oklch(0.5 0.01 260);
+  }
+  .thumb-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  .empty-state {
+    color: var(--color-muted);
+    font-size: 15px;
+  }
+  .card-body {
+    padding: 20px;
+  }
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .event-title {
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--color-ink);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .event-date {
+    font-size: 13px;
+    color: var(--color-muted);
+    margin-bottom: 16px;
+  }
+  .video-card {
+    display: block;
+    color: inherit;
+  }
+  .video-thumb {
+    position: relative;
+    height: 170px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    background: oklch(0.93 0.01 260);
+  }
+  .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .play-btn {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .play-triangle {
+    width: 0;
+    height: 0;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-left: 14px solid var(--color-blue);
+    margin-left: 4px;
+  }
+  .duration {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 5px;
+  }
+  .video-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--color-ink);
+    line-height: 1.3;
+  }
+  .sponsor-strip {
+    padding: 48px 56px;
+  }
+  .sponsor-strip-label {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    margin-bottom: 24px;
+  }
+  .sponsor-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .sponsor-pill {
+    padding: 14px 22px;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-muted-2);
+    background: white;
+  }
+  .highlight-card {
+    padding: 28px;
+  }
+  .quote {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-body);
+    margin: 0 0 20px;
+    font-style: italic;
+  }
+  .highlight-person {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .highlight-avatar {
+    width: 44px;
+    height: 44px;
+  }
+  .highlight-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-ink);
+  }
+  .highlight-role {
+    font-size: 12px;
+    color: var(--color-muted);
+  }
+  @media (max-width: 900px) {
+    .hero {
+      padding: 48px 20px;
+    }
+    .hero-content {
+      flex-direction: column;
+    }
+    h1 {
+      font-size: 34px;
+    }
+    .stats-row {
+      gap: 32px;
+    }
+  }
+</style>

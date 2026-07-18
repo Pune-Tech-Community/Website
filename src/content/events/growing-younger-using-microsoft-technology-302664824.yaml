@@ -1,0 +1,24 @@
+title: Growing younger using Microsoft Technology
+date: '2024-08-23'
+time: 6:30 PM IST
+tag: Community
+format: Virtual
+location: Online
+description: |-
+  As we get busy with our work and family (esp. with young kids), we often neglect personal health. With a small adjustment in diet, minimal exercise & monitoring health metrics with Microsoft Technology, one can actually "grow younger" - metabolically speaking and mentally.
+  How to join?
+
+  Join with MS Teams Meeting
+
+  Here's an example of using Microsoft Power Platform and the Azure stack to get and make sense of our health reports.
+  Below is an outline of steps that has worked for me:
+
+  Training / developing an Azure AI model (custom extraction) to scan our health reports.
+  These reports are temporarily stored in an Azure Blob for ease and further loaded to the AI model using an Azure Function.
+  The Azure function gets the results from AI model and hands to a Power Apps connector which brings the data over to Power Apps.
+  We further send the data over to Azure Open AI (GPT4o) for interpretation of results.
+  This is part of the tech that is used to better personal health. Naturally we could also use AI builder and above approach gives us more options as we'd be on a power apps license anyway.
+
+  See you there!
+meetupUrl: https://www.meetup.com/pune-tech-community/events/302664824/
+image: /uploads/events/302664824.jpg

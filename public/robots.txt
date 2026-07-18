@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://punetechcommunity.dev/sitemap-index.xml

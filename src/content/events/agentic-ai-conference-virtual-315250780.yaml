@@ -1,0 +1,62 @@
+title: Agentic AI Conference (Virtual)
+date: 2026-07-18
+time: 10:00 AM IST
+tag: AI
+format: Virtual
+location: Online
+description: >-
+  A complimentary virtual gathering centered on artificial intelligence and
+  intelligent agents. The event brings together developers, tech enthusiasts,
+  and industry experts to explore the latest innovations, learn from
+  real-world experiences, and connect with the tech community. Designed for
+  participants with basic AI familiarity.
+meetupUrl: https://www.meetup.com/pune-tech-community/events/315250780/
+image: /uploads/events/315250780.jpg
+agenda:
+  - time: 10:00-10:15 AM
+    title: Registration & Introduction
+    speaker: Nanddeep Nachan & Siddharth Vaghasia
+  - time: 10:15-11:00 AM
+    title: "Track 1: Enterprise-grade AI Agents with Microsoft Foundry"
+    speaker: Krunal Trivedi
+  - time: 10:15-11:00 AM
+    title: "Track 2: Responsible AI in Action"
+    speaker: Divya Akula
+  - time: 11:00-11:45 AM
+    title: "Track 1: Self-Supervised Structured Extraction with LLMs"
+    speaker: Abhinav Bohra (Amazon)
+  - time: 11:00-11:45 AM
+    title: "Track 2: AI Agents Reshaping Enterprise Architecture"
+    speaker: Sandip Jadhav
+  - time: 11:45 AM-12:30 PM
+    title: "Track 1: Multi-Agent Systems with Microsoft Foundry"
+    speaker: Srujan Rajesh Kumar
+  - time: 11:45 AM-12:30 PM
+    title: "Track 2: AI Agents for Infrastructure Configuration"
+    speaker: Santosh Mahale
+  - time: 12:30-1:15 PM
+    title: "Track 1: Trust by Design with Microsoft Foundry"
+    speaker: Janarthanan S
+  - time: 12:30-1:15 PM
+    title: "Track 2: Enterprise-Ready AI Agents with Guardrails"
+    speaker: Aroh Shukla
+  - time: 1:15-2:00 PM
+    title: "Track 1: Azure AI Landing Zone"
+    speaker: Lalit Rawat
+  - time: 1:15-2:00 PM
+    title: "Track 2: Microsoft Foundry Hosted Agents"
+    speaker: Shrushti Shah & Bhushan Gawale
+  - time: 2:00-2:45 PM
+    title: "Track 1: Multi-Agent Systems with CrewAI"
+    speaker: Siddhesh Prabhugaonkar
+  - time: 2:00-2:45 PM
+    title: "Track 2: Production-Ready AI Agents with Microsoft IQ"
+    speaker: Prathap Reddy
+speakerIds:
+  - aroh-shukla
+  - bhushan-gawale
+  - divya-akula
+  - janarthanan-selvaraj
+  - lalit-rawat
+  - shrushti-shah
+  - siddhesh-prabhugaonkar

@@ -1,0 +1,20 @@
+title: Secure your cloud with Azure VPN
+date: '2024-01-19'
+time: 6:30 PM IST
+tag: Azure
+format: Virtual
+location: Online
+description: |-
+  A virtual private network (VPN) provides a secure encrypted connection across another network.
+  An Azure VPN gateway is a specific type of virtual network gateway that is used to send and receive encrypted traffic between an Azure virtual network and an on-premises location over the public Internet.
+  Azure VPN gateways can also be used to connect separate Azure virtual networks using an encrypted tunnel across the Microsoft network backbone.
+  ---------------------------------------------
+
+  How to join?
+
+  Join with MS Teams meeting
+
+  ---------------------------------------------
+  See you there!
+meetupUrl: https://www.meetup.com/pune-tech-community/events/298500755/
+image: /uploads/events/298500755.jpg

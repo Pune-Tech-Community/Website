@@ -1,0 +1,173 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { getSiteSettings } from '../lib/settings';
+
+const sponsors = await getCollection('sponsors');
+const settings = await getSiteSettings();
+const tiers = (await getCollection('sponsorTiers')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout title="Sponsors" description={`Reach ${settings.memberCount} Azure, AI and Microsoft 365 practitioners in Pune.`}>
+  <div class="container">
+    <h1 class="page-title">Sponsor Pune Tech Community</h1>
+    <p class="page-subtitle">Reach {settings.memberCount} Azure, AI and Microsoft 365 practitioners in Pune.</p>
+
+    <div class="tiers">
+      {
+        tiers.map((tier) => (
+          <div class:list={['tier-card', tier.data.featured && 'tier-card-featured']}>
+            <div class:list={['tier-label', `tier-${tier.id}`]}>{tier.data.label}</div>
+            <div class="tier-price">
+              {tier.data.price}
+              <span>/event</span>
+            </div>
+            <div class="tier-benefits">
+              {tier.data.benefits.map((b) => (
+                <div>✓ {b}</div>
+              ))}
+            </div>
+            <a href="#sponsor-contact" class:list={['btn', 'btn-block', tier.data.featured ? 'btn-platinum' : 'btn-primary']}>
+              Get in touch
+            </a>
+          </div>
+        ))
+      }
+    </div>
+
+    <h2 class="section-title">Current &amp; past sponsors</h2>
+    <div class="sponsor-row">
+      {sponsors.map((s) => <div class="sponsor-pill">{s.data.name}</div>)}
+    </div>
+
+    <div id="sponsor-contact" class="contact-block">
+      <h3>Let's talk sponsorship</h3>
+      <p>sponsors@punetechcommunity.dev</p>
+      <form name="sponsor-inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="sponsor-inquiry" />
+        <p class="hidden-field"><label>Don't fill this out: <input name="bot-field" /></label></p>
+        <input type="text" name="company" placeholder="Company name" required />
+        <input type="email" name="email" placeholder="Work email" required />
+        <input type="text" name="tier" placeholder="Tier you're interested in" />
+        <textarea name="message" rows="3" placeholder="Anything else we should know?"></textarea>
+        <button type="submit" class="btn btn-accent">Contact us</button>
+      </form>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+  .tier-card {
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 32px;
+    background: white;
+  }
+  .tier-card-featured {
+    border: 2px solid var(--color-purple);
+  }
+  .tier-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .tier-platinum {
+    color: var(--color-purple);
+  }
+  .tier-gold {
+    color: oklch(0.5 0.01 260);
+  }
+  .tier-silver {
+    color: oklch(0.6 0.01 260);
+  }
+  .tier-price {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--color-ink);
+    margin-bottom: 20px;
+  }
+  .tier-price span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+  .tier-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--color-body);
+    margin-bottom: 24px;
+  }
+  .btn-platinum {
+    background: var(--color-purple);
+    color: white;
+  }
+  .sponsor-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 56px;
+  }
+  .sponsor-pill {
+    padding: 16px 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-muted-2);
+    background: white;
+  }
+  .contact-block {
+    background: var(--color-ink);
+    border-radius: 20px;
+    padding: 48px;
+    text-align: center;
+  }
+  .contact-block h3 {
+    font-size: 24px;
+    font-weight: 800;
+    color: white;
+    margin: 0 0 10px;
+  }
+  .contact-block > p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 24px;
+  }
+  .contact-block form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 420px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .contact-block input,
+  .contact-block textarea {
+    font-family: inherit;
+    font-size: 14px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: none;
+  }
+  .contact-block button {
+    align-self: center;
+  }
+  .hidden-field {
+    position: absolute;
+    left: -9999px;
+  }
+  @media (max-width: 900px) {
+    .tiers {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

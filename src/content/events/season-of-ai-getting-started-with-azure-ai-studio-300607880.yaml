@@ -1,0 +1,32 @@
+title: Season of AI - Getting started with Azure AI Studio
+date: '2024-06-22'
+time: 10:00 AM IST
+tag: Azure
+format: Virtual
+location: Online
+description: |-
+  Lets dive into Azure AI Studio - a cutting-edge 'code first' experience for building generative AI copilots. You will start by touring the studio experience, moving on to creating a RAG model, exploring other multi-modal models and wrapping up with the importance of evaluations and deployments. Join us and harness the power of Azure AI Studio to transform your ideas into reality!
+  How to join?
+
+  Join with MS Teams meeting
+
+  Agenda:
+
+  Tour the studio
+  Add your own data
+  Multi-modality
+  Evaluations and Deployments
+  Using function calling with Azure OpenAI Service
+  Azure OpenAI Assistants API
+  Prompt flow
+
+  Speakers:
+
+  Nanddeep Nachan (Microsoft MVP)
+  Siddharth Vaghasia (Microsoft MVP)
+  Smita Nachan (Microsoft MVP)
+  Kunj Sangani (M365 Consultant)
+
+  See you there!
+meetupUrl: https://www.meetup.com/pune-tech-community/events/300607880/
+image: /uploads/events/300607880.jpg

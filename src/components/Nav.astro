@@ -1,0 +1,64 @@
+---
+const links = [
+  { href: '/events', label: 'Events' },
+  // { href: '/speakers', label: 'Speakers' },
+  { href: '/videos', label: 'Videos', external: false },
+  { href: '/about', label: 'About' },
+  { href: '/sponsors', label: 'Sponsors' },
+];
+---
+
+<nav>
+  <a href="/" class="logo">
+    <img src="/logo.jpg" alt="Pune Tech Community" height="70" style="width:auto;" />
+  </a>
+  <div class="links">
+    {links.map((link) => (
+      <a href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener' : undefined}>
+        {link.label}
+      </a>
+    ))}
+    <a href="/events" class="btn btn-accent">Join / RSVP</a>
+  </div>
+</nav>
+
+<style>
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 56px;
+    height: 76px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+  .links a:not(.btn) {
+    color: var(--color-ink);
+    font-weight: 600;
+    font-size: 15px;
+  }
+  @media (max-width: 900px) {
+    nav {
+      padding: 0 20px;
+    }
+    .links {
+      gap: 16px;
+    }
+    .links a:not(.btn) {
+      display: none;
+    }
+  }
+</style>

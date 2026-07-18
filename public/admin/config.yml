@@ -1,0 +1,187 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Lets `npx decap-server` proxy local edits straight to the filesystem
+# during `npm run dev`, instead of requiring Netlify Identity.
+local_backend: true
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: settings
+    label: Site Settings
+    editor:
+      preview: false
+    files:
+      - name: general
+        label: Homepage Stats
+        file: src/content/settings/site.yaml
+        fields:
+          - { label: Community members (e.g. 20,000+), name: memberCount, widget: string }
+          - { label: Events hosted (e.g. 85), name: eventsHosted, widget: string }
+          - { label: Speakers featured (e.g. 140+), name: speakersFeatured, widget: string }
+
+  - name: events
+    label: Events
+    folder: src/content/events
+    create: true
+    slug: "{{slug}}"
+    extension: yaml
+    format: yaml
+    identifier_field: title
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD" }
+      - { label: Time, name: time, widget: string, hint: "e.g. 6:00 PM IST" }
+      - label: Topic
+        name: tag
+        widget: select
+        options: [Azure, AI, "Power Platform", M365, ".NET", Community]
+      - label: Format
+        name: format
+        widget: select
+        options: ["In-person", Virtual]
+      - { label: Location, name: location, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Meetup URL, name: meetupUrl, widget: string }
+      - { label: Banner image, name: image, widget: image, required: false }
+      - label: Agenda
+        name: agenda
+        widget: list
+        fields:
+          - { label: Time, name: time, widget: string }
+          - { label: Title, name: title, widget: string }
+          - { label: Speaker, name: speaker, widget: string, required: false }
+      - label: Speakers
+        name: speakerIds
+        widget: relation
+        collection: speakers
+        value_field: "{{slug}}"
+        search_fields: [name]
+        display_fields: [name]
+        multiple: true
+        required: false
+      - { label: Draft, name: draft, widget: boolean, default: false }
+
+  - name: speakers
+    label: Speakers
+    folder: src/content/speakers
+    create: true
+    slug: "{{slug}}"
+    extension: yaml
+    format: yaml
+    identifier_field: name
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Title, name: title, widget: string, required: false }
+      - { label: Photo, name: photo, widget: image, required: false }
+      - { label: Bio, name: bio, widget: text, required: false }
+      - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
+      - { label: X / Twitter URL, name: twitter, widget: string, required: false }
+
+  - name: sponsors
+    label: Sponsors
+    folder: src/content/sponsors
+    create: true
+    slug: "{{slug}}"
+    extension: yaml
+    format: yaml
+    identifier_field: name
+    fields:
+      - { label: Name, name: name, widget: string }
+      - label: Tier
+        name: tier
+        widget: select
+        options: [platinum, gold, silver]
+      - { label: Logo, name: logo, widget: image, required: false }
+      - { label: Website link, name: link, widget: string, required: false }
+
+  - name: sponsorTiers
+    label: Sponsor Tiers
+    folder: src/content/sponsor-tiers
+    create: true
+    slug: "{{slug}}"
+    extension: yaml
+    format: yaml
+    identifier_field: label
+    fields:
+      - { label: Tier label (e.g. PLATINUM), name: label, widget: string }
+      - { label: Price (e.g. ₹75,000), name: price, widget: string }
+      - { label: Display order (lower shows first), name: order, widget: number, default: 0 }
+      - { label: Featured (highlighted card), name: featured, widget: boolean, default: false }
+      - { label: Benefits, name: benefits, widget: list }
+
+  - name: videos
+    label: Videos
+    folder: src/content/videos
+    create: true
+    slug: "{{slug}}"
+    extension: yaml
+    format: yaml
+    identifier_field: title
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: YouTube video ID, name: youtubeId, widget: string, hint: "The part after v= in the YouTube URL" }
+      - label: Topic
+        name: tag
+        widget: select
+        options: [Azure, AI, "Power Platform", M365, ".NET", Community]
+      - label: Format
+        name: format
+        widget: select
+        options: ["In-person", Virtual]
+        required: false
+      - { label: Date recorded, name: date, widget: datetime, format: "YYYY-MM-DD", required: false }
+      - label: Speaker (if they have a profile on the site)
+        name: speakerId
+        widget: relation
+        collection: speakers
+        value_field: "{{slug}}"
+        search_fields: [name]
+        display_fields: [name]
+        required: false
+      - label: Speaker name (plain text, used when there's no profile above)
+        name: speakerName
+        widget: string
+        required: false
+      - label: Related event
+        name: eventId
+        widget: relation
+        collection: events
+        value_field: "{{slug}}"
+        search_fields: [title]
+        display_fields: [title]
+        required: false
+      - { label: Duration, name: duration, widget: string, hint: "e.g. 42 min" }
+
+  - name: organizers
+    label: Organizers
+    folder: src/content/organizers
+    create: true
+    slug: "{{slug}}"
+    extension: yaml
+    format: yaml
+    identifier_field: name
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Role, name: role, widget: string }
+      - { label: Display order (lower shows first), name: order, widget: number, default: 0 }
+      - { label: Photo, name: photo, widget: image, required: false }
+      - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
+      - { label: X / Twitter URL, name: twitter, widget: string, required: false }
+
+  - name: highlights
+    label: Community Highlights
+    folder: src/content/highlights
+    create: true
+    slug: "{{slug}}"
+    extension: yaml
+    format: yaml
+    identifier_field: name
+    fields:
+      - { label: Quote, name: quote, widget: text }
+      - { label: Name, name: name, widget: string }
+      - { label: Role (e.g. "Attendee since 2023"), name: role, widget: string }
+      - { label: Display order (lower shows first), name: order, widget: number, default: 0 }

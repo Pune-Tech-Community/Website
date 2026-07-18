@@ -1,0 +1,20 @@
+title: Working with Azure Kubernetes Service
+date: '2020-12-19'
+time: 7:00 PM IST
+tag: Azure
+format: Virtual
+location: Online
+description: |-
+  The new generation programs are being hosted on Containers. Containers are lightweight and powerful.
+  You can develop your application, package your application as a Container Image, and publish it to a private or public Container Registry. And in your Production environment, you need to pull the Container Image from the Registry and run it with ease.
+  This mechanism lets you port your application across environments with ease. You may have a scenario where you would host the front-end user interface in a container, backend business logic in a second container, and database in another container.
+  You need to enable communications across these containers. You may have to manage these containers so that they are scalable, reliable, and highly available. This calls for the need for the Orchestration of Containers.
+  There are various Container Orchestrators available in the market, and Kubernetes is one of them. Here in this session, we would explore how to build a container, push it to Azure Container Registry, and orchestrate it using Azure Kubernetes Services.
+  Agenda:
+
+  Introduction to Containers
+  Introduction to Kubernetes and Azure Kubernetes Service
+  Azure Kubernetes Service: The Big Picture
+  Demo: Push a .NET Core application to Azure Container Registry and orchestrate it on Azure Kubernetes Service
+meetupUrl: https://www.meetup.com/pune-tech-community/events/275140520/
+image: /uploads/events/275140520.jpg

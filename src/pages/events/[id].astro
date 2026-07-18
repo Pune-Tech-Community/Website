@@ -1,0 +1,296 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+import { tagClass, formatDate } from '../../lib/tags';
+
+export async function getStaticPaths() {
+  const events = await getCollection('events', ({ data }) => !data.draft);
+  return events.map((event) => ({ params: { id: event.id }, props: { event } }));
+}
+
+const { event } = Astro.props;
+const { data } = event;
+const isPast = data.date < new Date();
+
+const speakers = await Promise.all(data.speakerIds.map((ref) => getEntry(ref)));
+const sponsors = await getCollection('sponsors');
+const sponsorsByTier = {
+  platinum: sponsors.filter((s) => s.data.tier === 'platinum'),
+  gold: sponsors.filter((s) => s.data.tier === 'gold'),
+  silver: sponsors.filter((s) => s.data.tier === 'silver'),
+};
+
+const eventJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: data.title,
+  startDate: data.date.toISOString(),
+  eventAttendanceMode:
+    data.format === 'Virtual'
+      ? 'https://schema.org/OnlineEventAttendanceMode'
+      : 'https://schema.org/OfflineEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  location:
+    data.format === 'Virtual'
+      ? { '@type': 'VirtualLocation', url: data.meetupUrl }
+      : { '@type': 'Place', name: data.location, address: data.location },
+  description: data.description,
+  organizer: { '@type': 'Organization', name: 'Pune Tech Community' },
+  performer: speakers.filter(Boolean).map((s) => ({ '@type': 'Person', name: s!.data.name })),
+};
+---
+
+<Layout title={data.title} description={data.description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(eventJsonLd)} />
+
+  {data.image ? <img src={data.image} alt="" class="banner banner-img" /> : <div class="banner" />}
+  <div class="wrap">
+    <div class="main">
+      <a href="/events" class="back">&larr; Back to events</a>
+      <div class="badges">
+        <span class:list={['badge', tagClass(data.tag)]}>{data.tag}</span>
+        <span class="badge badge-format">{data.format}</span>
+      </div>
+      <h1 class="title">{data.title}</h1>
+      <div class="meta">{formatDate(data.date)} &middot; {data.time}</div>
+      <div class="meta">{data.location}</div>
+      <p class="desc">{data.description}</p>
+
+      {data.agenda.length > 0 && (
+        <>
+          <h2 class="section-title">Agenda</h2>
+          <div class="agenda">
+            {data.agenda.map((slot) => (
+              <div class="agenda-row">
+                <div class="agenda-time">{slot.time}</div>
+                <div>
+                  <div class="agenda-title">{slot.title}</div>
+                  {slot.speaker && <div class="agenda-speaker">{slot.speaker}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {speakers.length > 0 && (
+        <>
+          <h2 class="section-title">Speakers</h2>
+          <div class="grid-3 speakers-grid">
+            {speakers.filter(Boolean).map((sp) => (
+              <a href={sp!.data.linkedin || `/speakers/${sp!.id}`} target={sp!.data.linkedin ? '_blank' : undefined} rel={sp!.data.linkedin ? 'noopener' : undefined} class="speaker-card">
+                <div class="avatar-placeholder speaker-avatar" />
+                <div class="speaker-name">{sp!.data.name}</div>
+                {sp!.data.title && <div class="speaker-title">{sp!.data.title}</div>}
+              </a>
+            ))}
+          </div>
+        </>
+      )}
+
+      <h2 class="section-title">Sponsors</h2>
+      <div class="sponsor-tiers">
+        {(['platinum', 'gold', 'silver'] as const).map(
+          (tier) =>
+            sponsorsByTier[tier].length > 0 && (
+              <div>
+                <div class:list={['tier-label', `tier-${tier}`]}>{tier.toUpperCase()}</div>
+                <div class="tier-row">
+                  {sponsorsByTier[tier].map((s) => (
+                    <div class="sponsor-pill">{s.data.name}</div>
+                  ))}
+                </div>
+              </div>
+            )
+        )}
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        {isPast ? (
+          <>
+            <div class="sidebar-label">THIS EVENT HAS ENDED</div>
+            <div class="sidebar-datetime">{formatDate(data.date)}, {data.time}</div>
+            <a href={data.meetupUrl} class="btn btn-outline btn-block" target="_blank" rel="noopener">View on Meetup</a>
+          </>
+        ) : (
+          <>
+            <div class="sidebar-label">FREE &middot; SEATS LIMITED</div>
+            <div class="sidebar-datetime">{formatDate(data.date)}, {data.time}</div>
+            <a href={data.meetupUrl} class="btn btn-accent btn-block" target="_blank" rel="noopener">Register now</a>
+          </>
+        )}
+      </div>
+    </aside>
+  </div>
+</Layout>
+
+<style>
+  .banner {
+    height: 280px;
+    background: linear-gradient(135deg, oklch(0.5 0.15 250), oklch(0.4 0.13 260));
+  }
+  .banner-img {
+    width: 100%;
+    object-fit: cover;
+  }
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    gap: 56px;
+    align-items: flex-start;
+  }
+  .main {
+    flex: 1;
+    min-width: 0;
+    padding-top: 40px;
+    padding-bottom: 100px;
+  }
+  .back {
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin: 20px 0 14px;
+  }
+  .title {
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--color-ink);
+    margin: 0 0 14px;
+    line-height: 1.2;
+  }
+  .meta {
+    font-size: 15px;
+    color: var(--color-muted);
+    margin-bottom: 8px;
+  }
+  .desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--color-body);
+    margin: 20px 0 40px;
+    white-space: pre-line;
+  }
+  .agenda {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 48px;
+  }
+  .agenda-row {
+    display: flex;
+    gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid oklch(0.93 0.005 260);
+  }
+  .agenda-time {
+    width: 110px;
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+  .agenda-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--color-ink);
+    margin-bottom: 4px;
+  }
+  .agenda-speaker {
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+  .speakers-grid {
+    margin-bottom: 48px;
+  }
+  .speaker-card {
+    text-align: center;
+    color: inherit;
+  }
+  .speaker-avatar {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 12px;
+  }
+  .speaker-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-ink);
+  }
+  .speaker-title {
+    font-size: 12px;
+    color: var(--color-muted);
+  }
+  .sponsor-tiers {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .tier-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .tier-platinum {
+    color: var(--color-purple);
+  }
+  .tier-gold {
+    color: oklch(0.5 0.01 260);
+  }
+  .tier-silver {
+    color: oklch(0.6 0.01 260);
+  }
+  .tier-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .sponsor-pill {
+    padding: 12px 20px;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 96px;
+    margin-top: 40px;
+  }
+  .sidebar-card {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
+  .sidebar-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-muted);
+    margin-bottom: 6px;
+  }
+  .sidebar-datetime {
+    font-size: 15px;
+    color: var(--color-body);
+    margin-bottom: 20px;
+  }
+  @media (max-width: 900px) {
+    .wrap {
+      flex-direction: column;
+      padding: 0 20px;
+    }
+    .sidebar {
+      width: 100%;
+      position: static;
+    }
+  }
+</style>

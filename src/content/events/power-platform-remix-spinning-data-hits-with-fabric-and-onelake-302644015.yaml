@@ -1,0 +1,21 @@
+title: 'Power Platform Remix: Spinning Data Hits with Fabric and OneLake'
+date: '2024-08-09'
+time: 6:30 PM IST
+tag: Power Platform
+format: Virtual
+location: Online
+description: |-
+  In this session, I am going to let audience know about the ways to connect Microsoft Fabric with Power Platform
+  Agenda:
+
+  Using Virtual Tables in Dataverse to reference OneLake data
+  Using Dataflows in Dataverse to copy OneLake data
+  Using direct connectors in Power Apps / Power Automate to access OneLake data
+
+  How to join?
+
+  Join with MS Teams Meeting
+
+  See you there!
+meetupUrl: https://www.meetup.com/pune-tech-community/events/302644015/
+image: /uploads/events/302644015.jpg

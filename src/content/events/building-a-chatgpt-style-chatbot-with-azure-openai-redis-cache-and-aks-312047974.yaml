@@ -1,0 +1,17 @@
+title: Building a ChatGPT-Style Chatbot with Azure OpenAI, Redis Cache, and AKS
+date: '2025-11-28'
+time: 6:30 PM IST
+tag: Azure
+format: Virtual
+location: Online
+description: |-
+  Let's explore how to take an AI chatbot from idea to production!
+  In this session, we will build a ChatGPT-style application by calling Azure OpenAI endpoint, persist chat history with Azure Redis Cache, and containerize and deploy the full solution to Azure Kubernetes Service (AKS).
+  This session is perfect for platform engineers and architects who want to understand how modern AI apps are deployed
+  How to join?
+
+  Join with MS Teams meeting
+
+  See you there!
+meetupUrl: https://www.meetup.com/pune-tech-community/events/312047974/
+image: /uploads/events/312047974.jpg

@@ -1,0 +1,17 @@
+title: Developing a food delivery system using Azure serverless
+date: '2021-06-05'
+time: 6:00 PM IST
+tag: Azure
+format: Virtual
+location: Online
+description: |-
+  Explore serverless tech as an alternative to develop an event based architecture for a food delivery system.
+
+  The session will cover the following concepts:
+
+  Azure functions and durable functions
+  Walkthrough and demo of the food delivery project
+  Common pitfalls while working on serverless
+  Cost and performance analysis of the food delivery system
+meetupUrl: https://www.meetup.com/pune-tech-community/events/278354966/
+image: /uploads/events/278354966.jpg

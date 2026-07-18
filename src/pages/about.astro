@@ -1,0 +1,195 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { getSiteSettings } from '../lib/settings';
+
+const organizers = (await getCollection('organizers')).sort((a, b) => a.data.order - b.data.order);
+const settings = await getSiteSettings();
+---
+
+<Layout
+  title="About"
+  description="We're a volunteer-run group of engineers, architects and product folks who believe the best way to learn Azure, AI and Microsoft 365 is from each other."
+>
+  <div class="container-narrow">
+    <h1 class="page-title" style="margin-bottom:20px;">About Pune Tech Community</h1>
+    <p class="lead">
+      We're a volunteer-run group of engineers, architects and product folks who believe the best way to
+      learn Azure, AI and Microsoft 365 is from each other — not a slide deck from marketing.
+    </p>
+    <p class="body-text">
+      What started in 2019 as a handful of people trading notes over chai at a co-working space in Kharadi
+      has grown into Pune's largest Microsoft-focused meetup: {settings.eventsHosted} sessions, {settings.speakersFeatured} speakers, and a community of
+      over {settings.memberCount} members who show up, ship things, and teach what they know. Every event is free, every
+      recording stays online, and every talk is picked because someone genuinely wants to give it — not
+      because a vendor paid for the slot.
+    </p>
+
+    <h2 class="section-title" style="font-size:24px;">Organizers</h2>
+    <div class="organizers-grid">
+      {
+        organizers.map((o) => {
+          const Tag = o.data.linkedin ? 'a' : 'div';
+          return (
+            <Tag class="organizer" {...(o.data.linkedin ? { href: o.data.linkedin, target: '_blank', rel: 'noopener' } : {})}>
+              {o.data.photo ? (
+                <img src={o.data.photo} alt={o.data.name} class="organizer-avatar" />
+              ) : (
+                <div class="avatar-placeholder organizer-avatar" />
+              )}
+              <div class="organizer-name">{o.data.name}</div>
+              <div class="organizer-role">{o.data.role}</div>
+            </Tag>
+          );
+        })
+      }
+    </div>
+
+    <div class="callouts">
+      <div class="callout callout-blue">
+        <h3>Call for speakers</h3>
+        <p>
+          Given a talk internally? Shipped something interesting on Azure? We want to hear it. First-time
+          speakers welcome.
+        </p>
+        <a href="#submit-a-talk" class="btn btn-primary">Submit a talk</a>
+      </div>
+      <div class="callout callout-orange">
+        <h3>Sponsor the community</h3>
+        <p>Get in front of Pune's most active Microsoft-stack developers. Tiers start at ₹15,000.</p>
+        <a href="/sponsors" class="btn btn-accent">Become a sponsor</a>
+      </div>
+    </div>
+
+    <div id="submit-a-talk" class="cfp-form">
+      <h2 class="section-title" style="font-size:20px;">Submit a talk</h2>
+      <form name="cfp" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="cfp" />
+        <p class="hidden-field"><label>Don't fill this out: <input name="bot-field" /></label></p>
+
+        <label>
+          Your name
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Talk title
+          <input type="text" name="title" required />
+        </label>
+        <label>
+          Abstract
+          <textarea name="abstract" rows="4" required></textarea>
+        </label>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .lead {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--color-body);
+    margin: 0 0 24px;
+  }
+  .body-text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--color-muted-2);
+    margin: 0 0 56px;
+  }
+  .organizers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+  .organizer {
+    text-align: center;
+  }
+  .organizer-avatar {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .organizer-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-ink);
+  }
+  .organizer-role {
+    font-size: 12px;
+    color: var(--color-muted);
+  }
+  .callouts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+  .callout {
+    border-radius: 16px;
+    padding: 32px;
+  }
+  .callout-blue {
+    background: var(--color-blue-tint);
+  }
+  .callout-orange {
+    background: var(--color-orange-tint);
+  }
+  .callout h3 {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--color-ink);
+    margin: 0 0 10px;
+  }
+  .callout p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: oklch(0.35 0.02 260);
+    margin: 0 0 20px;
+  }
+  .cfp-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 480px;
+  }
+  .cfp-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .cfp-form input,
+  .cfp-form textarea {
+    font-family: inherit;
+    font-size: 14px;
+    padding: 10px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+  }
+  .cfp-form button {
+    align-self: flex-start;
+  }
+  .hidden-field {
+    position: absolute;
+    left: -9999px;
+  }
+  @media (max-width: 700px) {
+    .organizers-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .callouts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

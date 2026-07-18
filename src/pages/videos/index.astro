@@ -1,0 +1,270 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, getEntry } from 'astro:content';
+import { tagClass } from '../../lib/tags';
+
+const TOPICS = ['All', 'Azure', 'AI', 'Power Platform', 'M365'];
+
+const videosRaw = (await getCollection('videos')).sort(
+  (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0)
+);
+
+const videos = await Promise.all(
+  videosRaw.map(async (v) => ({
+    ...v.data,
+    id: v.id,
+    speakerName: v.data.speakerId ? (await getEntry(v.data.speakerId))?.data.name ?? '' : (v.data.speakerName ?? ''),
+  }))
+);
+
+const speakerNames = ['All', ...Array.from(new Set(videos.map((v) => v.speakerName).filter(Boolean)))];
+---
+
+<Layout title="Video library" description="Every past session, recorded and free to watch.">
+  <div class="container">
+    <div class="page-head">
+      <div>
+        <h1 class="page-title">Video library</h1>
+        <p class="page-subtitle">Every past session, recorded and free to watch.</p>
+      </div>
+      <a href="https://www.youtube.com/c/PuneTechCommunity" target="_blank" rel="noopener" class="btn btn-outline">
+        Visit our YouTube channel
+      </a>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-label">TOPIC</div>
+      <div class="filter-row">
+        {TOPICS.map((t, i) => <button class="filter-btn" data-topic={t} aria-pressed={i === 0}>{t}</button>)}
+      </div>
+    </div>
+    <div class="filter-group" style="margin-bottom:32px;">
+      <div class="filter-label">SPEAKER</div>
+      <div class="filter-row">
+        {speakerNames.map((s, i) => <button class="filter-btn" data-speaker={s} aria-pressed={i === 0}>{s}</button>)}
+      </div>
+    </div>
+
+    <div class="grid-3" id="video-grid">
+      {
+        videos.map((v) => (
+          <button
+            class="video-card"
+            data-topic={v.tag}
+            data-speaker={v.speakerName}
+            data-youtube={v.youtubeId}
+            data-title={v.title}
+          >
+            <div class="video-thumb">
+              <img src={`https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg`} alt="" loading="lazy" />
+              <div class="play-btn">
+                <div class="play-triangle" />
+              </div>
+              <span class="duration">{v.duration}</span>
+            </div>
+            <span class:list={['badge', tagClass(v.tag)]}>{v.tag}</span>
+            <div class="video-title">{v.title}</div>
+            {v.speakerName && <div class="video-speaker">{v.speakerName}</div>}
+          </button>
+        ))
+      }
+    </div>
+    <p id="no-results" hidden>No videos match your filters.</p>
+  </div>
+
+  <dialog id="video-dialog">
+    <button id="dialog-close" aria-label="Close">&times;</button>
+    <div class="dialog-frame-wrap">
+      <iframe id="dialog-iframe" src="" title="Video player" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </dialog>
+</Layout>
+
+<script>
+  const grid = document.getElementById('video-grid')!;
+  const cards = Array.from(grid.querySelectorAll<HTMLButtonElement>('[data-topic]'));
+  const topicButtons = document.querySelectorAll<HTMLButtonElement>('[data-topic].filter-btn');
+  const speakerButtons = document.querySelectorAll<HTMLButtonElement>('[data-speaker].filter-btn');
+  const noResults = document.getElementById('no-results')!;
+
+  let activeTopic = 'All';
+  let activeSpeaker = 'All';
+
+  function applyFilters() {
+    let visibleCount = 0;
+    for (const card of cards) {
+      const matches =
+        (activeTopic === 'All' || card.dataset.topic === activeTopic) &&
+        (activeSpeaker === 'All' || card.dataset.speaker === activeSpeaker);
+      card.style.display = matches ? '' : 'none';
+      if (matches) visibleCount++;
+    }
+    noResults.hidden = visibleCount > 0;
+  }
+
+  topicButtons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      activeTopic = btn.dataset.topic!;
+      topicButtons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      applyFilters();
+    })
+  );
+
+  speakerButtons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      activeSpeaker = btn.dataset.speaker!;
+      speakerButtons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      applyFilters();
+    })
+  );
+
+  const dialog = document.getElementById('video-dialog') as HTMLDialogElement;
+  const iframe = document.getElementById('dialog-iframe') as HTMLIFrameElement;
+
+  cards.forEach((card) =>
+    card.addEventListener('click', () => {
+      iframe.src = `https://www.youtube.com/embed/${card.dataset.youtube}?autoplay=1`;
+      dialog.showModal();
+    })
+  );
+
+  document.getElementById('dialog-close')!.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => {
+    iframe.src = '';
+  });
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+</script>
+
+<style>
+  .page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .page-head .page-title,
+  .page-head .page-subtitle {
+    margin-bottom: 0;
+  }
+  .page-head .btn {
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+  .filter-group {
+    margin-bottom: 12px;
+    margin-top: 32px;
+  }
+  .filter-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-muted);
+    margin-bottom: 8px;
+  }
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .video-card {
+    cursor: pointer;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    color: inherit;
+  }
+  .video-thumb {
+    position: relative;
+    height: 170px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    background: oklch(0.93 0.01 260);
+  }
+  .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .play-btn {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .play-triangle {
+    width: 0;
+    height: 0;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-left: 14px solid var(--color-blue);
+    margin-left: 4px;
+  }
+  .duration {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 5px;
+  }
+  .video-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--color-ink);
+    margin: 8px 0 4px;
+    line-height: 1.3;
+  }
+  .video-speaker {
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+  #no-results {
+    text-align: center;
+    color: var(--color-muted);
+    padding: 40px 0;
+  }
+  #video-dialog {
+    position: relative;
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    width: min(900px, 92vw);
+    background: black;
+  }
+  #video-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  .dialog-frame-wrap {
+    position: relative;
+    aspect-ratio: 16 / 9;
+  }
+  .dialog-frame-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  #dialog-close {
+    position: absolute;
+    top: -36px;
+    right: 0;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+  }
+</style>

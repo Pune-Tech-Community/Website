@@ -1,0 +1,13 @@
+title: Microsoft Teams Interoperability with Azure Communication Services
+date: '2022-01-22'
+time: 7:00 PM IST
+tag: M365
+format: Virtual
+location: Online
+description: |-
+  Imagine building an application for the enterprise where you plan to implement a secure connected experience on your website that incorporates a variety of communications modalities like chat, Text (SMS), voice call, video call and screen sharing that enable interaction with Microsoft Teams enterprise users. Each of this modality would require a separate implementation which is both time and resource intensive. Authenticating end users and securing the communication will further add implementation overhead.
+  Azure Communication Service is introduced to provide opportunities to build digital experience tailored to specific scenarios by using the same chat voice and video experiences and capabilities of Microsoft Teams, billed through Azure (pay what you use).
+  This session is targeted to developers and technical architects to understand how easy it is to implement an enterprise grade solution to integrate the proven communications capabilities of Microsoft Teams across your apps, websites, mobile and IoT platforms via Azure communication services. It includes a live implementation of Chat and video functionality.
+  Key takeaway from the session is to understand the service details, which will open a whole realm of opportunities they can imagine for their specific scenarios with an MS Teams enabled enterprise. Session outlines the details of how this service is both cost effective in terms of implementation / maintenance as well as flexible in terms of scalability.
+meetupUrl: https://www.meetup.com/pune-tech-community/events/283259793/
+image: /uploads/events/283259793.jpg
